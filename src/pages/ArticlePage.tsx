@@ -136,7 +136,7 @@ const ArticlePage: React.FC = () => {
 
       {/* Reaction Buttons */}
       <div className="border-t border-gray-200 pt-8 mb-8">
-        <ReactionButtons articleId={parseInt(article.id)} />
+        <ReactionButtons articleId={article.id} />
       </div>
 
       {/* Author Bio */}
