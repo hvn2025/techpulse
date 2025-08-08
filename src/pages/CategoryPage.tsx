@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { TrendingUp, Brain, BarChart3, Calendar } from 'lucide-react';
 import ArticleCard from '../components/ArticleCard';
 import { useArticles } from '../hooks/useArticles';
