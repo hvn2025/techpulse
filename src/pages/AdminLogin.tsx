@@ -61,20 +61,6 @@ const AdminLogin: React.FC = () => {
           <p className="mt-2 text-gray-600">
             {isSignUp ? 'Set up your admin account' : 'Sign in to manage your content'}
           </p>
-          
-          {/* Default Credentials Info */}
-          {!isSignUp && (
-            <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-800 font-medium mb-2">Quick Start Credentials:</p>
-              <div className="text-sm text-blue-700 space-y-1">
-                <p><strong>Email:</strong> admin@techpulse.com</p>
-                <p><strong>Password:</strong> TechPulse2024!</p>
-                <p className="text-xs mt-2 text-blue-600">
-                  Create this account using "Create Account" below, then sign in
-                </p>
-              </div>
-            </div>
-          )}
         </div>
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
