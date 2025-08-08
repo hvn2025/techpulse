@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
   };
 
   const socialLinks = [
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/techpulse' }
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/harshanunna' }
   ];
 
   return (
