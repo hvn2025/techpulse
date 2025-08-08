@@ -81,16 +81,16 @@ const CategoryPage: React.FC = () => {
             <div className={`${currentCategory.color} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6`}>
               <Icon className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">No Articles Yet</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Coming Soon</h3>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              This category is ready for your content. Start adding articles about {currentCategory.name.toLowerCase()} to engage your readers.
+              We're working on amazing {currentCategory.name.toLowerCase()} content. Subscribe to get notified when new articles are published!
             </p>
-            <a
-              href="/admin"
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+            <Link
+              to="/newsletter"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
             >
-              Add First Article
-            </a>
+              Subscribe for Updates
+            </Link>
           </div>
         </div>
       )}

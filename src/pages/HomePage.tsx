@@ -175,22 +175,16 @@ const HomePage: React.FC = () => {
             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Zap className="h-8 w-8 text-gray-400" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready for Your First Article</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Coming Soon</h3>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Your TechPulse website is set up and ready. Start adding your tech stories and insights to engage your audience.
+              We're preparing amazing tech stories and insights for you. Check back soon for the latest in technology and AI!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/admin"
+                to="/newsletter"
                 className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
               >
-                Add Your First Article
-              </Link>
-              <Link
-                to="/newsletter"
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold"
-              >
-                Set Up Newsletter
+                Get Notified When We Launch
               </Link>
             </div>
           </div>

@@ -2,22 +2,15 @@
 
 A modern, mobile-friendly tech blog platform inspired by Finshots, designed for creating digestible 3-minute reads on technology and AI topics.
 
-## 🚀 Quick Start
+## 🔐 Admin Access (Private)
 
-### Admin Access
-1. Go to `/admin/login`
-2. Click "Create Account" 
-3. Use these credentials to create your admin account:
-   - **Email**: `admin@techpulse.com`
-   - **Password**: `TechPulse2024!`
-4. After creating the account, sign in with the same credentials
-
-### Alternative Setup
-You can also create your own admin account:
+### For Content Creators Only
 1. Go to `/admin/login`
 2. Click "Create Account"
 3. Enter your preferred email and password
 4. Create account and then sign in
+
+**Note**: Admin routes are hidden from public users and only accessible via direct URL.
 
 ## 📝 Content Management
 
@@ -86,6 +79,11 @@ You can also create your own admin account:
 - Accessibility-focused features
 - Professional tech-inspired branding
 
----
+## 🌐 Public Access
+- Visitors can read all published content
+- No admin links or buttons visible to public users
+- Clean, professional reading experience
+- Newsletter subscription available
+- Social sharing enabled
 
-**Ready to start creating amazing tech content!** 🚀
+---
