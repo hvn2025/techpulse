@@ -139,23 +139,6 @@ const ArticlePage: React.FC = () => {
         <ReactionButtons articleId={article.id} />
       </div>
 
-      {/* Author Bio */}
-      <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-        <div className="flex items-center mb-4">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-4">
-            T
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-gray-900">TechPulse Team</h3>
-            <p className="text-gray-600">Senior Tech Writer</p>
-          </div>
-        </div>
-        <p className="text-gray-700">
-          Our team of technology journalists with years of experience covering AI, 
-          software development, and emerging tech trends. She specializes in making complex 
-          technical concepts accessible to everyone.
-        </p>
-      </div>
     </div>
   );
 };
