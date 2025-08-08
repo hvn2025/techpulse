@@ -23,8 +23,7 @@ const Footer: React.FC = () => {
 
   const socialLinks = [
     { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/techpulse' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/techpulse' },
-    { name: 'GitHub', icon: Github, href: 'https://github.com/techpulse' }
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/techpulse' }
   ];
 
   return (
