@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Mail, Twitter, Linkedin, Github } from 'lucide-react';
+import { Zap, Mail, Twitter, Linkedin } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -24,7 +24,6 @@ const Footer: React.FC = () => {
   const socialLinks = [
     { name: 'Twitter', icon: Twitter, href: 'https://twitter.com/techpulse' },
     { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/company/techpulse' }
-  ];
 
   return (
     <footer className="bg-gray-900 text-white">
