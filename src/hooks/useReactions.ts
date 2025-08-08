@@ -41,9 +41,9 @@ export const useReactions = (articleId: string) => {
         .from('reaction_counts')
         .select('*')
         .eq('article_id', articleId)
-        .single();
+        .maybeSingle();
 
-      if (countsError && countsError.code !== 'PGRST116') {
+      if (countsError) {
         console.error('Error fetching reaction counts:', countsError);
       } else if (countsData) {
         setCounts(countsData);
