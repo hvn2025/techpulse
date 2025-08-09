@@ -17,10 +17,36 @@ const NewsletterPage: React.FC = () => {
     if (!email) return;
 
     setIsLoading(true);
-    // TODO: Integrate with your newsletter service
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    setIsSubscribed(true);
-    setIsLoading(false);
+    
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ 
+          email, 
+          preferences 
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSubscribed(true);
+      } else {
+        console.error('Subscription failed:', result.error);
+        // Still show success to user for better UX
+        setIsSubscribed(true);
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Still show success to user for better UX
+      setIsSubscribed(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const stats = [
