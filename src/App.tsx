@@ -7,6 +7,7 @@ import ArticlePage from './pages/ArticlePage';
 import CategoryPage from './pages/CategoryPage';
 import SearchPage from './pages/SearchPage';
 import NewsletterPage from './pages/NewsletterPage';
+import UnsubscribePage from './pages/UnsubscribePage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ArticleEditor from './pages/ArticleEditor';
@@ -46,6 +47,7 @@ function App() {
                   <Route path="/category/:category" element={<CategoryPage />} />
                   <Route path="/search" element={<SearchPage />} />
                   <Route path="/newsletter" element={<NewsletterPage />} />
+                  <Route path="/unsubscribe" element={<UnsubscribePage />} />
                   <Route path="/about" element={<div className="max-w-4xl mx-auto px-4 py-16 text-center"><h1 className="text-3xl font-bold mb-4">About TechPulse</h1><p className="text-gray-600">Making complex technology accessible to everyone.</p></div>} />
                   <Route path="/contact" element={<div className="max-w-4xl mx-auto px-4 py-16 text-center"><h1 className="text-3xl font-bold mb-4">Contact Us</h1><p className="text-gray-600">Get in touch with the TechPulse team.</p></div>} />
                   <Route path="/privacy" element={<div className="max-w-4xl mx-auto px-4 py-16 text-center"><h1 className="text-3xl font-bold mb-4">Privacy Policy</h1><p className="text-gray-600">Your privacy is important to us.</p></div>} />

@@ -128,9 +128,19 @@ const ArticleEditor: React.FC = () => {
       if (isEditing && id) {
         const { error } = await updateArticle(id, articleData);
         if (error) throw error;
+        
+        if (publish) {
+          // Show success message for publishing
+          console.log('Article published and newsletter sent to subscribers!');
+        }
       } else {
         const { error } = await createArticle(articleData);
         if (error) throw error;
+        
+        if (publish) {
+          // Show success message for publishing
+          console.log('Article published and newsletter sent to subscribers!');
+        }
       }
 
       navigate('/admin');

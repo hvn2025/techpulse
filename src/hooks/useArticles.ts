@@ -50,12 +50,25 @@ export const useArticles = () => {
 
     if (!error) {
       await fetchArticles(false);
+      
+      // Send newsletter if article is published
+      if (article.published && data) {
+        try {
+          await sendNewsletterNotification(data.id);
+        } catch (emailError) {
+          console.error('Failed to send newsletter:', emailError);
+          // Don't fail the creation if email fails
+        }
+      }
     }
 
     return { data, error };
   };
 
   const updateArticle = async (id: string, updates: ArticleUpdate) => {
+    const wasUnpublished = articles.find(a => a.id === id)?.published === false;
+    const isNowPublished = updates.published === true;
+    
     const { data, error } = await supabase
       .from('articles')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -65,6 +78,16 @@ export const useArticles = () => {
 
     if (!error) {
       await fetchArticles(false);
+      
+      // Send newsletter if article was just published
+      if (wasUnpublished && isNowPublished && data) {
+        try {
+          await sendNewsletterNotification(data.id);
+        } catch (emailError) {
+          console.error('Failed to send newsletter:', emailError);
+          // Don't fail the update if email fails
+        }
+      }
     }
 
     return { data, error };
@@ -101,6 +124,24 @@ export const useArticles = () => {
       .getPublicUrl(filePath);
 
     return { data: { path: filePath, url: publicUrl }, error: null };
+  };
+
+  const sendNewsletterNotification = async (articleId: string) => {
+    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-newsletter`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+      },
+      body: JSON.stringify({ articleId }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Failed to send newsletter');
+    }
+
+    return await response.json();
   };
 
   useEffect(() => {

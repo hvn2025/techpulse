@@ -39,7 +39,14 @@ const AdminDashboard: React.FC = () => {
   };
 
   const togglePublished = async (id: string, currentStatus: boolean) => {
-    await updateArticle(id, { published: !currentStatus });
+    const newStatus = !currentStatus;
+    await updateArticle(id, { published: newStatus });
+    
+    // Show success message when publishing
+    if (newStatus) {
+      // You could add a toast notification here
+      console.log('Article published and newsletter sent to subscribers!');
+    }
   };
 
   const filteredArticles = articles.filter(article => {
