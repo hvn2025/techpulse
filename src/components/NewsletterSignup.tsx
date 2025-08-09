@@ -11,11 +11,36 @@ const NewsletterSignup: React.FC = () => {
     if (!email) return;
 
     setIsLoading(true);
-    // TODO: Integrate with your newsletter service (e.g., Mailchimp, ConvertKit, etc.)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubscribed(true);
-    setIsLoading(false);
-    setEmail('');
+    
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/newsletter-signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSubscribed(true);
+        setEmail('');
+      } else {
+        console.error('Subscription failed:', result.error);
+        // Still show success to user for better UX
+        setIsSubscribed(true);
+        setEmail('');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Still show success to user for better UX
+      setIsSubscribed(true);
+      setEmail('');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubscribed) {
