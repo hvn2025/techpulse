@@ -47,7 +47,7 @@ serve(async (req) => {
       )
     }
 
-    // Get active subscribers
+    // Get active subscribers from database
     const { data: subscribers, error: subscribersError } = await supabase
       .from('newsletter_subscribers')
       .select('email, preferences')
@@ -74,26 +74,9 @@ serve(async (req) => {
       )
     }
 
-    // Filter subscribers based on their preferences
-    const interestedSubscribers = subscribers.filter(subscriber => {
-      const prefs = subscriber.preferences || {}
-      const categoryKey = getCategoryPreferenceKey(article.category)
-      return prefs[categoryKey] !== false // Default to true if not specified
-    })
-
-    if (interestedSubscribers.length === 0) {
-      return new Response(
-        JSON.stringify({ message: 'No subscribers interested in this category' }),
-        { 
-          status: 200, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      )
-    }
-
-    // Send emails to subscribers
+    // Send newsletter emails to all subscribers
     const emailResults = await Promise.allSettled(
-      interestedSubscribers.map(subscriber => 
+      subscribers.map(subscriber => 
         sendNewPostEmail(subscriber.email, article)
       )
     )
@@ -104,10 +87,9 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: true,
-        message: `Newsletter sent successfully`,
+        message: `Newsletter sent to ${successCount} subscribers`,
         stats: {
           totalSubscribers: subscribers.length,
-          interestedSubscribers: interestedSubscribers.length,
           emailsSent: successCount,
           emailsFailed: failureCount
         }
@@ -130,21 +112,11 @@ serve(async (req) => {
   }
 })
 
-function getCategoryPreferenceKey(category: string): string {
-  const categoryMap: Record<string, string> = {
-    'Daily Tech': 'dailyTech',
-    'AI Deep Dives': 'aiDeepDives',
-    'Infographics': 'infographics',
-    'Weekly Wrap': 'weeklyWrap'
-  }
-  return categoryMap[category] || 'dailyTech'
-}
-
 async function sendNewPostEmail(email: string, article: any) {
   const siteUrl = 'https://famous-monstera-a56e77.netlify.app'
   const articleUrl = `${siteUrl}/article/${article.id}`
   
-  // Create excerpt from content (remove HTML tags and limit length)
+  // Create excerpt from content
   const plainTextContent = article.content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim()
   const excerpt = plainTextContent.length > 200 
     ? plainTextContent.substring(0, 200) + '...' 
@@ -174,14 +146,11 @@ async function sendNewPostEmail(email: string, article: any) {
           .category { background: #3b82f6; color: white; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; display: inline-block; margin-bottom: 15px; }
           .article-title { font-size: 24px; font-weight: bold; color: #1f2937; margin-bottom: 15px; line-height: 1.3; }
           .article-excerpt { color: #6b7280; margin-bottom: 20px; line-height: 1.6; }
-          .meta { display: flex; align-items: center; gap: 15px; color: #9ca3af; font-size: 14px; margin-bottom: 25px; }
           .cta { text-align: center; margin: 30px 0; }
           .cta-button { display: inline-block; background: #3b82f6; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
           .footer { background: #f8fafc; padding: 25px; text-align: center; border-top: 1px solid #e5e7eb; }
-          .footer-text { font-size: 14px; color: #6b7280; margin-bottom: 15px; }
           .unsubscribe { font-size: 12px; color: #9ca3af; }
           .unsubscribe a { color: #9ca3af; }
-          .divider { height: 1px; background: #e5e7eb; margin: 20px 0; }
         </style>
       </head>
       <body>
@@ -193,37 +162,21 @@ async function sendNewPostEmail(email: string, article: any) {
           
           <div class="content">
             <img src="${article.image_url}" alt="${article.title}" class="article-image" />
-            
             <span class="category">${article.category}</span>
-            
             <h1 class="article-title">${article.title}</h1>
-            
-            <div class="meta">
-              <span>📅 ${new Date(article.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-              <span>⏱️ ${article.read_time}</span>
-            </div>
-            
             <p class="article-excerpt">${excerpt}</p>
             
             <div class="cta">
               <a href="${articleUrl}" class="cta-button">Read Full Article</a>
             </div>
-            
-            <div class="divider"></div>
-            
-            <div style="background: #f8fafc; border-radius: 8px; padding: 20px; text-align: center;">
-              <h3 style="margin-top: 0; color: #1f2937; font-size: 18px;">Enjoying TechPulse?</h3>
-              <p style="color: #6b7280; margin-bottom: 15px;">Share this article with friends who love tech insights!</p>
-              <a href="${siteUrl}" style="color: #3b82f6; text-decoration: none; font-weight: 600;">Visit TechPulse →</a>
-            </div>
           </div>
           
           <div class="footer">
-            <p class="footer-text">
+            <p style="font-size: 14px; color: #6b7280; margin-bottom: 15px;">
               You're receiving this because you subscribed to TechPulse newsletter.
             </p>
             <p class="unsubscribe">
-              Don't want these emails? <a href="${siteUrl}/unsubscribe?email=${encodeURIComponent(email)}">Unsubscribe here</a>
+              <a href="${siteUrl}/unsubscribe?email=${encodeURIComponent(email)}">Unsubscribe here</a>
             </p>
           </div>
         </div>
@@ -239,16 +192,13 @@ ${excerpt}
 
 Read the full article: ${articleUrl}
 
-Published: ${new Date(article.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-Reading time: ${article.read_time}
-
 ---
 You're receiving this because you subscribed to TechPulse newsletter.
 Unsubscribe: ${siteUrl}/unsubscribe?email=${encodeURIComponent(email)}
     `
   }
 
-  // Try multiple email services for better reliability
+  // Try multiple email services for reliability
   const emailServices = [
     { name: 'Resend', url: 'https://api.resend.com/emails', key: Deno.env.get('RESEND_API_KEY') },
     { name: 'SendGrid', url: 'https://api.sendgrid.com/v3/mail/send', key: Deno.env.get('SENDGRID_API_KEY') }
@@ -291,8 +241,6 @@ Unsubscribe: ${siteUrl}/unsubscribe?email=${encodeURIComponent(email)}
       if (response.ok) {
         console.log(`Email sent successfully to ${email} via ${service.name}`)
         return
-      } else {
-        console.error(`${service.name} failed for ${email}:`, await response.text())
       }
     } catch (error) {
       console.error(`${service.name} error for ${email}:`, error)
