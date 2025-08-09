@@ -49,7 +49,7 @@ const NewsletterSignup: React.FC = () => {
         <CheckCircle className="h-16 w-16 mx-auto mb-4 text-green-400" />
         <h3 className="text-2xl font-bold mb-2">Welcome to TechPulse!</h3>
         <p className="text-blue-100">
-          Thank you for subscribing! You'll receive updates when new content is published.
+          Thank you for subscribing! Check your email for a confirmation message with more details.
         </p>
       </section>
     );

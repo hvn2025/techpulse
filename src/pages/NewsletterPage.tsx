@@ -64,12 +64,12 @@ const NewsletterPage: React.FC = () => {
             Welcome to TechPulse!
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            You're all set! You'll receive updates when new content is published.
+            You're all set! Check your email for a confirmation message with more details about what to expect.
           </p>
           <div className="bg-blue-50 rounded-lg p-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-2">What happens next?</h3>
             <ul className="text-blue-800 space-y-2 text-left max-w-md mx-auto">
-              <li>• You'll receive a confirmation email shortly</li>
+              <li>• Check your inbox for a welcome email</li>
               <li>• Get notified when new articles are published</li>
               <li>• Customize your preferences anytime</li>
               <li>• Unsubscribe with one click if needed</li>
