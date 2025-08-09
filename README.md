@@ -2,15 +2,7 @@
 
 A modern, mobile-friendly tech blog platform inspired by Finshots, designed for creating digestible 3-minute reads on technology and AI topics.
 
-## 🔐 Admin Access (Private)
 
-### For Content Creators Only
-1. Go to `/admin/login`
-2. Click "Create Account"
-3. Enter your preferred email and password
-4. Create account and then sign in
-
-**Note**: Admin routes are hidden from public users and only accessible via direct URL.
 
 ## 📝 Content Management
 
